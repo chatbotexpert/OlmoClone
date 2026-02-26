@@ -1,0 +1,60 @@
+---
+// Marquee.astro
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<section class="bg-brutal-white overflow-hidden py-6 border-y border-brutal-black/10 flex items-center group">
+  <div class="whitespace-nowrap flex font-heading font-bold text-xl md:text-3xl uppercase tracking-widest text-brutal-black/90 group-hover:[animation-play-state:paused] [animation-play-state:running]">
+    <!-- Original Marquee Track -->
+    <div class="animate-marquee inline-flex items-center pe-8 group-hover:[animation-play-state:paused]">
+      <span class="mx-8 flex items-center gap-8">
+        <span class="text-brutal-orange text-5xl md:text-7xl leading-none relative top-1">*</span> 
+        {text}
+        <span class="">—</span>
+      </span>
+      <span class="mx-8 flex items-center gap-8">
+        <span class="text-brutal-orange text-5xl md:text-7xl leading-none relative top-1">*</span> 
+        {text}
+        <span class="">—</span>
+      </span>
+      <span class="mx-8 flex items-center gap-8">
+        <span class="text-brutal-orange text-5xl md:text-7xl leading-none relative top-1">*</span> 
+        {text}
+        <span class="">—</span>
+      </span>
+      <span class="mx-8 flex items-center gap-8">
+        <span class="text-brutal-orange text-5xl md:text-7xl leading-none relative top-1">*</span> 
+        {text}
+        <span class="">—</span>
+      </span>
+    </div>
+
+    <!-- Duplicate Marquee Track for Seamless Looping -->
+    <div class="animate-marquee inline-flex items-center pe-8 group-hover:[animation-play-state:paused]" aria-hidden="true">
+      <span class="mx-8 flex items-center gap-8">
+        <span class="text-brutal-orange text-5xl md:text-7xl leading-none relative top-1">*</span> 
+        {text}
+        <span class="">—</span>
+      </span>
+      <span class="mx-8 flex items-center gap-8">
+        <span class="text-brutal-orange text-5xl md:text-7xl leading-none relative top-1">*</span> 
+        {text}
+        <span class="">—</span>
+      </span>
+      <span class="mx-8 flex items-center gap-8">
+        <span class="text-brutal-orange text-5xl md:text-7xl leading-none relative top-1">*</span> 
+        {text}
+        <span class="">—</span>
+      </span>
+      <span class="mx-8 flex items-center gap-8">
+        <span class="text-brutal-orange text-5xl md:text-7xl leading-none relative top-1">*</span> 
+        {text}
+        <span class="">—</span>
+      </span>
+    </div>
+  </div>
+</section>

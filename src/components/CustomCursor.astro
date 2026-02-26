@@ -1,0 +1,84 @@
+---
+// CustomCursor.astro
+---
+
+<div id="custom-cursor" class="hidden md:block fixed top-0 left-0 w-4 h-4 rounded-full bg-brutal-black pointer-events-none z-[9999] mix-blend-difference transition-[transform,opacity] duration-300 ease-out" style="transform: translate(-50%, -50%) scale(0);"></div>
+
+<style is:global>
+  /* Hide the default global cursor on desktop sizes */
+  @media (min-width: 768px) {
+    body {
+      cursor: none;
+    }
+    a, button, input, textarea, select {
+      cursor: none !important;
+    }
+  }
+</style>
+
+<script>
+  function initCursor() {
+    const cursor = document.getElementById('custom-cursor');
+    // Abort if mobile / touch
+    if (!cursor || window.innerWidth < 768) return;
+
+    let targetX = -100, targetY = -100;
+    let currentX = -100, currentY = -100;
+    let isHovering = false;
+    let rafId: number;
+
+    // Show initial
+    cursor.style.transform = `translate(-50%, -50%) scale(1)`;
+    cursor.style.opacity = '1';
+
+    const onMouseMove = (e: MouseEvent) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+
+    const updateCursor = () => {
+      currentX += (targetX - currentX) * 0.2; // LERP for zero lag smooth trailing
+      currentY += (targetY - currentY) * 0.2;
+
+      if (cursor) {
+        if (isHovering) {
+          cursor.style.transform = `translate(calc(${currentX}px - 50%), calc(${currentY}px - 50%)) scale(3)`;
+          cursor.style.opacity = '0.5';
+        } else {
+          cursor.style.transform = `translate(calc(${currentX}px - 50%), calc(${currentY}px - 50%)) scale(1)`;
+          cursor.style.opacity = '1';
+        }
+      }
+      rafId = requestAnimationFrame(updateCursor);
+    };
+
+    rafId = requestAnimationFrame(updateCursor);
+
+    // Attach event listeners dynamically to all anchors, buttons, and specific project images
+    const attachHoverEvents = () => {
+      const hoverTargets = document.querySelectorAll('a, button, .service-item, .work-item img');
+      hoverTargets.forEach((el) => {
+        el.addEventListener('mouseenter', () => isHovering = true);
+        el.addEventListener('mouseleave', () => isHovering = false);
+      });
+    };
+
+    attachHoverEvents();
+
+    // Clean up function bound to window
+    window.destroyCursor = () => {
+      document.removeEventListener('mousemove', onMouseMove);
+      cancelAnimationFrame(rafId);
+    };
+  }
+
+  // Handle SPA navigations
+  document.addEventListener('astro:before-swap', () => {
+    if (window.destroyCursor) window.destroyCursor();
+  });
+  
+  document.addEventListener('astro:page-load', initCursor);
+  initCursor();
+</script>

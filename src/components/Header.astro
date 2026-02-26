@@ -1,0 +1,108 @@
+---
+// Header.astro
+---
+<!-- 
+  Header Container:
+  Fixed to the viewport. 
+  The inner `<header>` will animate its width, padding, border-radius, and background using GSAP.
+-->
+<div class="fixed top-0 left-0 w-full z-50 flex justify-center mt-0 transition-all duration-300" id="header-wrapper">
+  
+  <!-- 
+    The visible navbar:
+    Starts wide (w-full max-w-none), flat (rounded-none), transparent (bg-transparent), and flush with the top.
+  -->
+  <header id="main-header" class="w-full max-w-none bg-transparent rounded-none text-brutal-white px-8 py-6 flex justify-between items-center transition-colors duration-300">
+    
+    <div class="font-heading text-4xl md:text-5xl uppercase tracking-tighter leading-none">
+      <a href="/" class="hover:opacity-80 transition-opacity">OLMO</a>
+    </div>
+    
+    <nav class="hidden md:flex gap-8 font-heading text-sm uppercase tracking-wide items-center">
+      <a href="/" class="hover:text-brutal-orange transition-colors">Home</a>
+      <a href="/work" class="hover:text-brutal-orange transition-colors">Work</a>
+      <a href="/about" class="hover:text-brutal-orange transition-colors">Studio</a>
+      <a href="/contact" class="bg-brutal-white text-brutal-black px-8 py-3 rounded-full font-body font-bold tracking-widest hover:-translate-y-1 hover:shadow-[4px_4px_0_0_#f25b2a] transition-all">Let's Chat</a>
+      
+      <!-- Theme Toggle -->
+      <button id="theme-toggle" aria-label="Toggle Dark Mode" class="ml-4 focus:outline-none hover:rotate-12 transition-transform text-brutal-white">
+        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+        </svg>
+        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 4.22a1 1 0 011.415 0l.708.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zm-4.22 4.22a1 1 0 010 1.415l-.707.708a1 1 0 01-1.414-1.414l.707.707a1 1 0 011.414 0zM10 16a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-4.22-4.22a1 1 0 01-1.415 0l-.708-.707a1 1 0 011.414-1.414l.707.707a1 1 0 010 1.414zM2 10a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zm4.22-4.22a1 1 0 010-1.415l.707-.708a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414 0zM10 5a5 5 0 100 10 5 5 0 000-10z"></path>
+        </svg>
+      </button>
+    </nav>
+  
+    <button class="md:hidden font-body uppercase text-sm font-semibold tracking-widest text-brutal-white">Menu</button>
+  </header>
+</div>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initHeaderAnimation() {
+    const header = document.getElementById('main-header');
+    const wrapper = document.getElementById('header-wrapper');
+
+    if (!header || !wrapper) return;
+
+    // We animate from the "top/flat" state to the "scrolled/pill" state using ScrollTrigger
+    // `scrub: true` links the animation directly to the scrollbar position briefly, 
+    // or we can use a toggleActions approach for a distinct transition. 
+    // Based on the "morph" requirement, a tween toggled on scrolling past a threshold is buttery and robust.
+
+    ScrollTrigger.create({
+      start: "top -50", // When the user scrolls 50px down
+      end: 99999,
+      toggleClass: {
+        targets: wrapper,
+        className: "mt-4" // Adds a slight margin top so it detaches
+      },
+      onEnter: () => {
+        // Morph to the "scrolled" state: pill shape, max-width, solid background, shadow
+        gsap.to(header, {
+          maxWidth: "1280px", // max-w-7xl rough equivalent
+          backgroundColor: "rgba(13, 13, 13, 0.95)", // bg-brutal-black/95
+          backdropFilter: "blur(12px)",
+          borderRadius: "9999px", // full pill shape
+          paddingTop: "1rem",   // py-4 equivalent
+          paddingBottom: "1rem",
+          boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.5)",
+          border: "1px solid rgba(244, 244, 244, 0.1)", // subtle border
+          duration: 0.4,
+          ease: "power2.out"
+        });
+      },
+      onLeaveBack: () => {
+        // Morph back to the "top" state: full width, flat, transparent
+        gsap.to(header, {
+          maxWidth: "100%",
+          backgroundColor: "transparent",
+          backdropFilter: "blur(0px)",
+          borderRadius: "0px",
+          paddingTop: "1.5rem",   // py-6 equivalent
+          paddingBottom: "1.5rem",
+          boxShadow: "none",
+          border: "1px solid transparent",
+          duration: 0.4,
+          ease: "power2.out"
+        });
+      }
+    });
+  }
+
+  // Handle Astro's view transitions correctly
+  document.addEventListener('astro:page-load', initHeaderAnimation);
+  
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initHeaderAnimation();
+  } else {
+    document.addEventListener('DOMContentLoaded', initHeaderAnimation);
+  }
+</script>
+

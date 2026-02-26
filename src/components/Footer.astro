@@ -1,0 +1,89 @@
+---
+// Footer.astro
+const currentYear = new Date().getFullYear();
+---
+<footer class="bg-brutal-black text-brutal-white font-body transition-colors duration-300 border-t border-brutal-black/10 mt-20">
+  
+  <!-- SECTION 1: Pre-Footer CTA -->
+  <div class="px-8 py-32 border-b border-brutal-white/20 relative overflow-hidden flex flex-col items-center text-center">
+    <h2 class="font-heading font-bold text-4xl md:text-5xl lg:text-6xl uppercase tracking-normal pb-4 max-w-5xl mx-auto mb-8 relative z-10 flex flex-col gap-2 md:gap-4">
+      <span>Ready to start</span>
+      <span><span class="text-brutal-orange">today?</span></span>
+    </h2>
+    
+    <p class="font-body text-xl md:text-2xl font-medium opacity-80 max-w-2xl mx-auto mb-16 relative z-10">
+      Let's turn your ideas into a powerful digital experience. Share your vision with our team.
+    </p>
+
+    <!-- Prominent Contact Button -->
+    <a href="/contact" class="inline-block bg-brutal-white text-brutal-black px-12 py-5 rounded-full font-body font-bold uppercase tracking-widest text-sm hover:scale-110 hover:shadow-[0_0_20px_rgba(242,91,42,0.4)] transition-all duration-300 relative z-10">
+      Contact Now
+    </a>
+  </div>
+
+  <!-- SECTION 2: The Links Grid -->
+  <div class="px-8 py-20 pb-10">
+    <div class="max-w-screen-2xl mx-auto">
+      
+      <!-- 5-Column Grid Layout -->
+      <div class="grid grid-cols-2 md:grid-cols-5 xl:grid-cols-6 gap-x-12 gap-y-16 text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold pb-24 border-b border-brutal-white/10">
+        
+        <!-- 1. Massive Logo (Spans 2 columns on extra large screens, full width on mobile) -->
+        <div class="col-span-2 md:col-span-5 xl:col-span-2 mb-8 md:mb-0">
+          <h3 class="font-heading text-7xl md:text-9xl tracking-tighter leading-none m-0 p-0 text-brutal-white hover:text-brutal-orange transition-colors duration-500 w-fit">
+            OLMO
+          </h3>
+        </div>
+
+        <!-- 2. Navigate -->
+        <div class="flex flex-col gap-6">
+          <h4 class="opacity-50 font-body tracking-[0.3em] mb-2">Navigate</h4>
+          <a href="/" class="hover:text-brutal-orange transition-colors w-fit">Home</a>
+          <a href="/work" class="hover:text-brutal-orange transition-colors w-fit">Work</a>
+          <a href="/about" class="hover:text-brutal-orange transition-colors w-fit">Studio</a>
+          <a href="/contact" class="hover:text-brutal-orange transition-colors w-fit">Let's Chat</a>
+        </div>
+        
+        <!-- 3. Follow -->
+        <div class="flex flex-col gap-6">
+          <h4 class="opacity-50 font-body tracking-[0.3em] mb-2">Follow</h4>
+          <a href="#" class="hover:text-brutal-orange transition-colors w-fit">Instagram</a>
+          <a href="#" class="hover:text-brutal-orange transition-colors w-fit">Facebook</a>
+          <a href="#" class="hover:text-brutal-orange transition-colors w-fit">LinkedIn</a>
+          <a href="#" class="hover:text-brutal-orange transition-colors w-fit">X.com</a>
+        </div>
+        
+        <!-- 4. Contact / Visit -->
+        <div class="flex flex-col gap-6 xl:col-span-1">
+          <h4 class="opacity-50 font-body tracking-[0.3em] mb-2">Contact</h4>
+          <a href="/contact" class="hover:text-brutal-orange transition-colors w-fit">Get Started</a>
+          <a href="mailto:contact@olmo-studio.com" class="hover:text-brutal-orange transition-colors w-fit lowercase tracking-normal">contact@olmo-studio.com</a>
+          
+          <h4 class="opacity-50 font-body tracking-[0.3em] mt-4 mb-2">Visit</h4>
+          <p class="tracking-widest">Sat-Sun: Closed</p>
+          <address class="not-italic tracking-widest leading-relaxed">
+            Mendoza, New York<br />
+            NY 11111
+          </address>
+        </div>
+        
+        <!-- 5. Legal -->
+        <div class="flex flex-col gap-6">
+          <h4 class="opacity-50 font-body tracking-[0.3em] mb-2">Other</h4>
+          <a href="/terms" class="hover:text-brutal-orange transition-colors w-fit">Term of Use</a>
+          <a href="/privacy" class="hover:text-brutal-orange transition-colors w-fit">Privacy Policy</a>
+          <a href="/licensing" class="hover:text-brutal-orange transition-colors w-fit">Licensing</a>
+          <a href="/faq" class="hover:text-brutal-orange transition-colors w-fit">FAQ</a>
+        </div>
+    
+      </div>
+
+      <!-- Bottom Layout Bar -->
+      <div class="flex flex-col sm:flex-row justify-between items-center text-[10px] md:text-xs uppercase tracking-[0.2em] font-semibold opacity-40 pt-10">
+        <p class="mb-4 sm:mb-0">All Rights Reserved.</p>
+        <p>&copy; {currentYear} Olmo Studio</p>
+      </div>
+
+    </div>
+  </div>
+</footer>

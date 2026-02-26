@@ -1,0 +1,109 @@
+---
+// Features.astro
+---
+
+<section class="bg-brutal-black text-brutal-white py-32 px-8 border-b border-brutal-white/10 relative z-10">
+  <div class="max-w-screen-2xl mx-auto flex flex-col md:flex-row gap-16 md:gap-8">
+    
+    <!-- Left Column (Sticky) -->
+    <div class="md:w-5/12">
+      <div class="md:sticky md:top-32 space-y-8">
+        <div class="overflow-hidden clip-mask">
+          <h2 id="features-heading" class="font-heading font-bold text-4xl md:text-5xl uppercase tracking-normal leading-normal">
+            <span class="block overflow-hidden clip-mask"><span class="block translate-y-[120%] opacity-0">Why</span></span>
+            <span class="block overflow-hidden clip-mask"><span class="block translate-y-[120%] opacity-0">Choose Us</span></span>
+          </h2>
+        </div>
+        <p class="font-body text-2xl md:text-3xl font-medium opacity-80 max-w-sm">
+          A design partner that elevates your brand and delivers results.
+        </p>
+      </div>
+    </div>
+
+    <!-- Right Column (Scrolling Cards + Interleaved Images) -->
+    <div class="md:w-7/12 flex flex-col gap-8 md:gap-16">
+      
+      <!-- Feature 01 -->
+      <div class="space-y-4">
+        <div class="text-brutal-orange font-heading text-2xl">01</div>
+        <h3 class="font-heading text-4xl md:text-5xl leading-[1.2] uppercase tracking-tight">Fast Turnarounds</h3>
+        <p class="font-body opacity-70 text-lg max-w-lg">
+          We respect your time. Our streamlined process ensures your projects are delivered rapidly without ever compromising on quality.
+        </p>
+      </div>
+
+      <!-- Interleaved Image 1 -->
+      <div class="w-full aspect-video md:aspect-[4/3] rounded-3xl overflow-hidden mt-4">
+        <img 
+          src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=2564&ixlib=rb-4.0.3" 
+          alt="Abstract Brutalist Architecture" 
+          class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+        />
+      </div>
+
+      <!-- Feature 02 -->
+      <div class="space-y-4 mt-8">
+        <div class="text-brutal-orange font-heading text-2xl">02</div>
+        <h3 class="font-heading text-4xl md:text-5xl leading-[1.2] uppercase tracking-tight">Design that Converts</h3>
+        <p class="font-body opacity-70 text-lg max-w-lg">
+          Aesthetics meet functionality. We build striking, brutalist-inspired interfaces calculated to drive user engagement and high conversion rates.
+        </p>
+      </div>
+
+      <!-- Interleaved Image 2 -->
+      <div class="w-full aspect-[4/5] rounded-3xl overflow-hidden mt-4">
+        <img 
+          src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=2670&ixlib=rb-4.0.3" 
+          alt="Abstract Art" 
+          class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+        />
+      </div>
+
+      <!-- Feature 03 -->
+      <div class="space-y-4 mt-8">
+        <div class="text-brutal-orange font-heading text-2xl">03</div>
+        <h3 class="font-heading text-4xl md:text-5xl leading-[1.2] uppercase tracking-tight">Technical Excellence</h3>
+        <p class="font-body opacity-70 text-lg max-w-lg">
+          Leveraging cutting-edge technology like Astro and Tailwind to ensure your website is lightning fast, fully accessible, and SEO-optimized.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initFeaturesAnimations() {
+    const headingLines = gsap.utils.toArray('#features-heading > span > span');
+    
+    if (headingLines.length > 0) {
+      gsap.to(headingLines, {
+        scrollTrigger: {
+          trigger: '#features-heading',
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        },
+        y: "0%",
+        opacity: 1,
+        duration: 1.2,
+        stagger: 0.1,
+        ease: "power4.out"
+      });
+    }
+  }
+
+  // Support Astro View Transitions natively
+  document.addEventListener('astro:page-load', initFeaturesAnimations);
+  
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initFeaturesAnimations();
+  } else {
+    document.addEventListener('DOMContentLoaded', initFeaturesAnimations);
+  }
+</script>

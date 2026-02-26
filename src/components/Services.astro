@@ -1,0 +1,137 @@
+---
+// Services.astro
+import { Image } from 'astro:assets';
+
+const services = [
+  {
+    title: "Design",
+    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=2000&ixlib=rb-4.0.3",
+    alt: "Abstract Design Concepts"
+  },
+  {
+    title: "Identity",
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=2564&ixlib=rb-4.0.3",
+    alt: "Brand Identity Layout"
+  },
+  {
+    title: "Rebranding",
+    image: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&q=80&w=2670&ixlib=rb-4.0.3",
+    alt: "Rebranding Strategy"
+  },
+  {
+    title: "Strategy",
+    image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=2600&ixlib=rb-4.0.3",
+    alt: "Strategic Planning"
+  }
+];
+---
+
+<section class="bg-brutal-white text-brutal-black py-32 px-8 border-b border-brutal-black/10">
+  <div class="max-w-screen-2xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-24">
+    
+    <!-- Left Column: Services List -->
+    <div class="lg:w-1/2 flex flex-col justify-center">
+      <h2 class="font-heading text-2xl md:text-3xl uppercase tracking-widest mb-12 opacity-50">
+        Our Expertise
+      </h2>
+      
+      <div class="flex flex-col border-t border-brutal-black/20" id="services-list">
+        {services.map((service, index) => (
+          <div 
+            class="service-item group cursor-pointer border-b border-brutal-black/20 py-8 md:py-12 flex justify-between items-center transition-colors duration-300 hover:bg-brutal-black hover:text-brutal-white px-6 -mx-6 rounded-2xl"
+            data-index={index}
+          >
+            <h3 class="font-heading font-bold text-3xl md:text-4xl lg:text-5xl uppercase tracking-normal leading-normal transition-transform duration-500 group-hover:translate-x-4 pb-2">
+              {service.title}
+            </h3>
+            <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -translate-x-4 group-hover:translate-x-0">
+              <svg class="w-10 h-10 md:w-16 md:h-16 text-brutal-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Right Column: Image Container -->
+    <div class="lg:w-1/2 relative h-[50vh] lg:h-[80vh] w-full rounded-3xl overflow-hidden bg-brutal-black/5" id="services-image-container">
+      {services.map((service, index) => (
+        <div 
+          class="service-img-wrapper absolute inset-0 w-full h-full opacity-0 transition-opacity duration-700 ease-in-out"
+          id={`service-img-${index}`}
+        >
+          <Image 
+            src={service.image} 
+            alt={service.alt} 
+            width={1200} height={1600} 
+            class="w-full h-full object-cover scale-105 transition-transform duration-[1000ms] ease-out"
+          />
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function initServicesHover() {
+    const serviceItems = document.querySelectorAll('.service-item');
+    const imageWrappers = document.querySelectorAll('.service-img-wrapper');
+    
+    if (serviceItems.length === 0 || imageWrappers.length === 0) return;
+
+    // Set initial active state (first item)
+    let activeIndex = 0;
+    
+    const updateActiveImage = (newIndex: number) => {
+      // Hide old image and scale it back up
+      const oldWrapper = document.getElementById(`service-img-${activeIndex}`);
+      if (oldWrapper) {
+        oldWrapper.style.opacity = '0';
+        oldWrapper.style.zIndex = '0';
+        const oldImg = oldWrapper.querySelector('img');
+        if (oldImg) oldImg.style.transform = 'scale(1.05)';
+      }
+
+      // Show new image and scale it to actual size (105 -> 100)
+      const newWrapper = document.getElementById(`service-img-${newIndex}`);
+      if (newWrapper) {
+        newWrapper.style.opacity = '1';
+        newWrapper.style.zIndex = '10';
+        const newImg = newWrapper.querySelector('img');
+        // Small timeout ensures the transition triggers properly after opacity starts
+        setTimeout(() => {
+          if (newImg) newImg.style.transform = 'scale(1)';
+        }, 50);
+      }
+      
+      activeIndex = newIndex;
+    };
+
+    // Initialize the first image
+    updateActiveImage(0);
+
+    // Attach hover listeners
+    serviceItems.forEach((item) => {
+      item.addEventListener('mouseenter', () => {
+        const indexStr = item.getAttribute('data-index');
+        if (indexStr !== null) {
+          const index = parseInt(indexStr, 10);
+          if (index !== activeIndex && !isNaN(index)) {
+            updateActiveImage(index);
+          }
+        }
+      });
+    });
+  }
+
+  // Astro View Transitions support
+  document.addEventListener('astro:page-load', initServicesHover);
+  
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initServicesHover();
+  } else {
+    document.addEventListener('DOMContentLoaded', initServicesHover);
+  }
+</script>
