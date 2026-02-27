@@ -1,0 +1,65 @@
+---
+// StudioCta.astro
+---
+
+<section class="bg-[#151515] text-brutal-white py-32 px-4 md:px-8 border-t border-b border-brutal-white/10 relative overflow-hidden">
+  
+  <!-- Decorative Background elements -->
+  <div class="absolute top-0 right-0 w-1/2 h-full opacity-5 pointer-events-none mix-blend-overlay flex justify-end items-center">
+    <!-- Starburst SVG -->
+    <svg class="w-[800px] h-[800px] animate-[spin_60s_linear_infinite]" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0l2.5 9.5L24 12l-9.5 2.5L12 24l-2.5-9.5L0 12l9.5-2.5L12 0z"/>
+    </svg>
+  </div>
+
+  <div class="max-w-screen-xl mx-auto flex flex-col items-center text-center relative z-10">
+    <div class="mb-8 flex items-center justify-center gap-4 text-brutal-orange uppercase font-bold tracking-widest text-sm opacity-0 translate-y-5" id="cta-subtitle">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+      <span>Start Your Project</span>
+    </div>
+
+    <h2 id="cta-heading" class="font-heading font-black text-5xl md:text-7xl lg:text-8xl uppercase tracking-tighter leading-none mb-6 opacity-0 translate-y-10">
+      Ready To<br/>Start Today?
+    </h2>
+
+    <p id="cta-desc" class="font-body text-lg md:text-xl max-w-2xl mx-auto text-brutal-white/60 mb-10 opacity-0 translate-y-10">
+      Let's turn your ideas into a powerful digital experience. Drop us a line and let's craft something memorable.
+    </p>
+
+    <a href="/contact" id="cta-btn" class="inline-flex items-center justify-center gap-4 bg-brutal-white text-brutal-black px-10 md:px-14 py-5 md:py-6 rounded-full font-heading font-black uppercase tracking-wide text-lg md:text-xl hover:bg-brutal-orange hover:text-white transition-all duration-300 hover:scale-105 opacity-0 translate-y-10 group">
+      Contact Now
+      <svg class="w-6 h-6 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+      </svg>
+    </a>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initStudioCta() {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#cta-heading',
+        start: "top 85%",
+        toggleActions: "play none none reverse"
+      }
+    });
+
+    tl.to('#cta-subtitle', { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" })
+      .to('#cta-heading', { y: 0, opacity: 1, duration: 0.8, ease: "power4.out" }, "-=0.4")
+      .to('#cta-desc', { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, "-=0.6")
+      .to('#cta-btn', { y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.5)" }, "-=0.4");
+  }
+
+  document.addEventListener('astro:page-load', initStudioCta);
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initStudioCta();
+  } else {
+    document.addEventListener('DOMContentLoaded', initStudioCta);
+  }
+</script>

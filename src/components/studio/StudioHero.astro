@@ -1,0 +1,63 @@
+---
+// StudioHero.astro
+---
+
+<!-- HERO PLACEHOLDER (maintains scroll height) -->
+<div class="h-screen w-full"></div>
+
+<!-- Fixed Hero Wrapper for Sticky Transition -->
+<section class="fixed top-0 left-0 w-full h-screen flex flex-col items-center justify-center z-0 overflow-hidden bg-brutal-black pointer-events-none">
+  <div class="pointer-events-auto contents">
+  <!-- Video Background -->
+  <div class="absolute inset-0 w-full h-full opacity-60">
+    <video 
+      autoplay 
+      loop 
+      muted 
+      playsinline 
+      class="w-full h-full object-cover scale-105"
+    >
+      <source src="https://olmo-studio.vercel.app/videos/video-two.mp4" type="video/mp4" />
+    </video>
+    <!-- Vignette/Glow overlay -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_50%,rgba(10,10,10,0.8)_100%)]"></div>
+  </div>
+
+  <!-- Giant Headline -->
+  <div class="relative z-10 text-center px-4 w-full mix-blend-difference">
+    <h1 id="studio-hero-heading" class="font-heading font-black text-6xl md:text-8xl lg:text-9xl tracking-tighter uppercase leading-none text-white opacity-0 translate-y-[50px]">
+      INSIDE OUR STUDIO
+    </h1>
+  </div>
+
+  <div class="absolute bottom-8 text-white/50 animate-bounce">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+  </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+
+  function initStudioHero() {
+    const heading = document.getElementById('studio-hero-heading');
+    if (heading) {
+      gsap.to(heading, {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        delay: 0.2, // Let the page transition finish
+        ease: "power4.out"
+      });
+    }
+  }
+
+  document.addEventListener('astro:page-load', initStudioHero);
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initStudioHero();
+  } else {
+    document.addEventListener('DOMContentLoaded', initStudioHero);
+  }
+</script>

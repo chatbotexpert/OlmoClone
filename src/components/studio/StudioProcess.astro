@@ -1,0 +1,97 @@
+---
+// StudioProcess.astro
+const steps = [
+  {
+    num: "01",
+    title: "Discovery",
+    desc: "We begin by diving deep into your business objectives, target audience, and market landscape. This foundational research ensures every creative decision is rooted in strategy and insight."
+  },
+  {
+    num: "02",
+    title: "Planning",
+    desc: "With clear insights in hand, we craft a strategic roadmap with defined milestones. We outline the project architecture, ensuring alignment and setting the stage for flawless execution."
+  },
+  {
+    num: "03",
+    title: "Execution",
+    desc: "Our design and development teams collaborate to bring the vision to life. Through rigorous iteration and attention to detail, we deliver a final product that exceeds expectations."
+  }
+];
+---
+
+<section class="bg-brutal-white text-brutal-black py-32 px-4 md:px-8 border-b border-brutal-black/10 overflow-hidden">
+  <div class="max-w-screen-xl mx-auto">
+
+    <div class="flex flex-col mb-16 gap-4">
+      <h2 id="process-heading" class="font-heading font-black text-4xl md:text-6xl uppercase tracking-tighter leading-none opacity-0 -translate-x-10">
+        How We Work
+      </h2>
+    </div>
+
+    <div class="space-y-16 md:space-y-0 md:flex md:gap-12 lg:gap-24 relative" id="process-steps-container">
+      
+      {/* Decorative dashed lines between steps for desktop */}
+      <div class="hidden md:block absolute top-[60px] left-0 w-full h-[2px] border-t-2 border-dashed border-brutal-black/20 -z-10"></div>
+
+      {steps.map((step) => (
+        <div class="process-step flex-1 opacity-0 translate-y-10 bg-brutal-white/50 backdrop-blur-sm relative">
+          <div class="w-12 h-12 md:w-16 md:h-16 bg-brutal-orange text-brutal-white rounded-full flex items-center justify-center font-heading font-black text-xl md:text-2xl mb-6 transform hover:scale-110 transition-transform duration-300">
+            {step.num}
+          </div>
+          <h3 class="font-heading text-2xl md:text-3xl uppercase tracking-tight mb-3 font-bold">
+            {step.title}
+          </h3>
+          <p class="font-body text-base text-brutal-black/60 leading-relaxed max-w-sm">
+            {step.desc}
+          </p>
+        </div>
+      ))}
+      
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initStudioProcess() {
+    gsap.to('#process-heading', {
+      scrollTrigger: {
+        trigger: '#process-heading',
+        start: "top 85%",
+        toggleActions: "play none none reverse"
+      },
+      x: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: "power4.out"
+    });
+
+    const steps = gsap.utils.toArray('.process-step');
+    if (steps.length > 0) {
+      gsap.to(steps, {
+        scrollTrigger: {
+          trigger: '#process-steps-container',
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        },
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.2, // Sequentially fade in each step
+        ease: "power3.out"
+      });
+    }
+  }
+
+  document.addEventListener('astro:page-load', initStudioProcess);
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initStudioProcess();
+  } else {
+    document.addEventListener('DOMContentLoaded', initStudioProcess);
+  }
+</script>

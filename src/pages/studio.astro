@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StudioHero from '../components/studio/StudioHero.astro';
+import StudioAbout from '../components/studio/StudioAbout.astro';
+import StudioValues from '../components/studio/StudioValues.astro';
+import StudioProcess from '../components/studio/StudioProcess.astro';
+import StudioTeam from '../components/studio/StudioTeam.astro';
+import StudioCta from '../components/studio/StudioCta.astro';
+import Marquee from '../components/Marquee.astro';
+---
+
+<Layout title="Olmo Studio | Studio">
+  
+    <StudioHero />
+
+    <!-- We wrap the remaining sections in relative z-10 so they scroll OVER the fixed hero -->
+    <div class="relative z-10 bg-brutal-white">
+      
+      <Marquee text="OUR STORY" />
+      <StudioAbout />
+      
+      <Marquee text="OUR VALUES" />
+      <StudioValues />
+
+      <Marquee text="HOW WE WORK" />
+      <StudioProcess />
+
+      <Marquee text="TEAM MEMBERS" />
+      <StudioTeam />
+
+    </div>
+
+</Layout>

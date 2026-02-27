@@ -1,0 +1,110 @@
+---
+// StudioValues.astro
+const values = [
+  {
+    num: "01",
+    title: "Creative Excellence",
+    desc: "We push creative boundaries to deliver designs that inspire and captivate. Our approach is rooted in aesthetic perfection and bold innovation."
+  },
+  {
+    num: "02",
+    title: "Strategic Thinking",
+    desc: "Every design decision is driven by insight and purpose. We align our visual language directly with your core business objectives to guarantee measurable impact."
+  },
+  {
+    num: "03",
+    title: "Meaningful Collaboration",
+    desc: "We believe great results come from seamless teamwork. We partner closely with our clients, ensuring transparency and open communication throughout the process."
+  },
+  {
+    num: "04",
+    title: "Lasting Impact",
+    desc: "We don't just build for today; we design for the future. Our brutalist-inspired systems are engineered to scale, endure, and leave a lasting legacy in your market."
+  }
+];
+---
+
+<section class="bg-[#151515] text-brutal-white py-32 px-4 md:px-8 border-b border-brutal-white/10">
+  <div class="max-w-screen-2xl mx-auto">
+    
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 gap-6">
+      <h2 id="values-heading" class="font-heading font-black text-4xl md:text-6xl uppercase tracking-tighter leading-none opacity-0 translate-y-10">
+        Our Vision<br/>& Pillars
+      </h2>
+      <p id="values-subtext" class="font-body text-lg max-w-sm opacity-0 translate-y-10 text-brutal-white/60">
+        The core principles that drive our process and define our standard of quality.
+      </p>
+    </div>
+
+    <!-- 2x2 Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-brutal-white/10 border border-brutal-white/10 rounded-3xl overflow-hidden" id="values-grid">
+      {values.map((val) => (
+        <div class="value-card bg-[#151515] p-12 md:p-16 hover:bg-brutal-black transition-colors duration-500 group flex flex-col justify-between aspect-square md:aspect-auto md:h-[500px]">
+          <div class="text-brutal-orange font-heading text-2xl md:text-3xl mb-8 transform group-hover:-translate-y-2 transition-transform duration-500">
+            {val.num}
+          </div>
+          <div>
+            <h3 class="font-heading text-2xl md:text-3xl uppercase tracking-tight mb-4 group-hover:text-brutal-white transition-colors duration-300">
+              {val.title}
+            </h3>
+            <p class="font-body text-base text-brutal-white/60 leading-relaxed group-hover:text-brutal-white/80 transition-colors duration-300">
+              {val.desc}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initStudioValues() {
+    // Header Animation
+    gsap.to(['#values-heading', '#values-subtext'], {
+      scrollTrigger: {
+        trigger: '#values-heading',
+        start: "top 85%",
+        toggleActions: "play none none reverse"
+      },
+      y: 0,
+      opacity: 1,
+      duration: 1,
+      stagger: 0.15,
+      ease: "power3.out"
+    });
+
+    // Grid Cards Stagger
+    const cards = gsap.utils.toArray('.value-card');
+    if (cards.length > 0) {
+      gsap.fromTo(cards, 
+        { opacity: 0, y: 50 },
+        {
+          scrollTrigger: {
+            trigger: '#values-grid',
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          },
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          stagger: 0.1,
+          ease: "power3.out"
+        }
+      );
+    }
+  }
+
+  document.addEventListener('astro:page-load', initStudioValues);
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initStudioValues();
+  } else {
+    document.addEventListener('DOMContentLoaded', initStudioValues);
+  }
+</script>
