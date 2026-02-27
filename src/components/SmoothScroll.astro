@@ -10,8 +10,8 @@
   gsap.registerPlugin(ScrollTrigger);
 
   function initLenis() {
-    if (window.lenisInstance) {
-      window.lenisInstance.destroy();
+    if ((window as any).lenisInstance) {
+      (window as any).lenisInstance.destroy();
     }
 
     const lenis = new Lenis({
@@ -21,15 +21,12 @@
       wheelMultiplier: 1,
     });
 
-    window.lenisInstance = lenis;
+    (window as any).lenisInstance = lenis;
 
     // Sync Lenis scrolling with GSAP Scrolltrigger
     lenis.on('scroll', ScrollTrigger.update);
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+    // raf function removed because it was unused and replaced by gsap.ticker below
     
     // Merge GSAP ticker and Lenis RAF to avoid jittering
     gsap.ticker.add((time)=>{

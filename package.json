@@ -7,8 +7,7 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "postinstall": "chmod +x node_modules/.bin/astro || true"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.1",

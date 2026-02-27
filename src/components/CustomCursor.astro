@@ -68,7 +68,7 @@
     attachHoverEvents();
 
     // Clean up function bound to window
-    window.destroyCursor = () => {
+    (window as any).destroyCursor = () => {
       document.removeEventListener('mousemove', onMouseMove);
       cancelAnimationFrame(rafId);
     };
@@ -76,7 +76,7 @@
 
   // Handle SPA navigations
   document.addEventListener('astro:before-swap', () => {
-    if (window.destroyCursor) window.destroyCursor();
+    if ((window as any).destroyCursor) (window as any).destroyCursor();
   });
   
   document.addEventListener('astro:page-load', initCursor);
