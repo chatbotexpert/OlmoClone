@@ -2,8 +2,12 @@
 // Hero.astro
 ---
 
-<!-- HERO SECTION -->
-<section class="relative min-h-[90vh] md:h-screen w-full flex flex-col justify-end pb-12 pt-32 px-4 md:px-8 overflow-hidden bg-brutal-black">
+<!-- HERO PLACEHOLDER (maintains scroll height) -->
+<div class="h-[90vh] md:h-screen w-full"></div>
+
+<!-- HERO SECTION (Fixed Background Reveal) -->
+<section class="fixed top-0 left-0 min-h-[90vh] md:h-screen w-full flex flex-col justify-end pb-12 pt-32 px-4 md:px-8 overflow-hidden bg-brutal-black z-0 pointer-events-none">
+  <div class="pointer-events-auto contents">
   <!-- Background Image placeholder -->
   <div class="absolute inset-0 z-0">
     <img 
@@ -26,10 +30,11 @@
     </div>
 
   </div>
+  </div>
 </section>
 
-<!-- STATEMENT SECTION (White Background) -->
-<section class="bg-brutal-white text-brutal-black py-24 md:py-40 px-4 md:px-8 border-b border-brutal-black/10">
+<!-- STATEMENT SECTION (White Background, sits on top of fixed hero) -->
+<section class="relative z-10 bg-brutal-white text-brutal-black py-24 md:py-40 px-4 md:px-8 border-b border-brutal-black/10">
   <div class="max-w-screen-xl mx-auto text-center flex flex-col items-center gap-12">
     
     <div class="overflow-hidden w-full clip-mask">
@@ -64,8 +69,37 @@
 
   </div>
 
-  <div class="mt-24 md:mt-32 border-t border-brutal-black/20 pt-8 text-center uppercase tracking-widest text-xs font-semibold opacity-50">
-    Global Partners :
+  <div class="mt-24 md:mt-32 pt-8 border-t border-brutal-black/20 overflow-hidden relative pb-32">
+    <div class="text-center uppercase tracking-widest text-[#888888] text-[0.65rem] md:text-xs font-semibold mb-12">
+      Global Partners :
+    </div>
+    
+    <!-- Partner Logos Grid -->
+    <div class="max-w-screen-xl mx-auto px-4 md:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        
+        {
+          [
+            { name: 'AWS', icon: '<svg class="w-6 h-6 mr-3 text-[#232F3E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>' },
+            { name: 'Oracle', icon: '<svg class="w-6 h-6 mr-3 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><rect x="3" y="6" width="18" height="12" rx="4"/></svg>' },
+            { name: 'US Army', icon: '<svg class="w-6 h-6 mr-3 text-yellow-600" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' },
+            { name: 'Microsoft', icon: '<svg class="w-6 h-6 mr-3" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="9" height="9" fill="#f25022"/><rect x="13" y="2" width="9" height="9" fill="#7fba00"/><rect x="2" y="13" width="9" height="9" fill="#00a4ef"/><rect x="13" y="13" width="9" height="9" fill="#ffb900"/></svg>' },
+            { name: 'Vercel', icon: '<svg class="w-5 h-5 mr-3 text-black" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L24 22H0L12 2Z"/></svg>' },
+            { name: 'Google', icon: '<svg class="w-6 h-6 mr-3 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8m-4-4h8"/></svg>' },
+            { name: 'Meta', icon: '<svg class="w-6 h-6 mr-3 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8c-3 0-5 2-5 4s2 4 5 4 5-2 5-4-2-4-5-4z"/><circle cx="12" cy="12" r="1.5"/></svg>' },
+            { name: 'Stripe', icon: '<svg class="w-6 h-6 mr-2 text-indigo-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12,4.8c-2.3,0-3.8,1.2-3.8,3s1.3,2.7,3.6,3.1c1.8,0.3,2.4,0.8,2.4,1.6c0,1-1.1,1.7-2.6,1.7c-1.5,0-3-0.6-4.2-1.5v3.4c1.2,0.8,3,1.3,4.6,1.3c2.6,0,4.2-1.3,4.2-3.3c0-1.8-1.2-2.7-3.7-3.1c-1.8-0.3-2.3-0.8-2.3-1.5c0-0.9,1-1.5,2.3-1.5c1.3,0,2.6,0.6,3.6,1.3V5.5C14.7,4.9,13.4,4.8,12,4.8z"/></svg>' }
+          ].map((partner, i) => (
+            <div class="partner-card opacity-0 bg-white border border-transparent shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] rounded-2xl md:rounded-[24px] h-24 md:h-28 flex items-center justify-center hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:border-brutal-black/10 hover:-translate-y-1 transition-all duration-300 group cursor-default">
+              <div class="flex items-center transition-transform duration-300 group-hover:scale-110 group-hover:text-brutal-orange pointer-events-none" set:html={partner.icon}></div>
+              <span class="font-heading font-bold text-lg md:text-xl tracking-tight text-brutal-black group-hover:text-brutal-orange transition-colors duration-300 pointer-events-none">
+                {partner.name}
+              </span>
+            </div>
+          ))
+        }
+
+      </div>
+    </div>
   </div>
 </section>
 
@@ -153,6 +187,26 @@
         ease: "back.out(1.7)", // Add a little pop to the button
         delay: 0.3
       });
+    }
+
+    // Partner Reveal
+    const partners = gsap.utils.toArray('.partner-card');
+    if (partners.length > 0) {
+      gsap.fromTo(partners,
+        { opacity: 0, y: 30 },
+        {
+          scrollTrigger: {
+            trigger: partners[0] as Element,
+            start: "top 95%",
+            toggleActions: "play none none reverse"
+          },
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out"
+        }
+      );
     }
   }
 
